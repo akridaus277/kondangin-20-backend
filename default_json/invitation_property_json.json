@@ -1,0 +1,17 @@
+{
+    "features" : [
+        "title",
+        "coverPhoto",
+        "music",
+        "couples",
+        "mainEventDate",
+        "mainEventLocation",
+        "eventSchedules",
+        "photoGalleries",
+        "videoGalleries",
+        "utterances",
+        "digitalGifts",
+        "whatsappShareContent",
+        "loveStories"
+    ]
+}

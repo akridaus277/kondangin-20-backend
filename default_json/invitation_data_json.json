@@ -1,0 +1,138 @@
+{
+    "title" : "The Wedding of Arga & Nisa",
+    "coverPhoto" : "urlCoverPhoto",
+    "music" : {
+        "title" : "Beautiful in White",
+        "name" : "",
+        "link" : "musicLink"
+    },
+    "couples": [
+        {
+            "order": 1,
+            "name": "Arga Suraga",
+            "nickName": "Arga",
+            "gender": "male",
+            "additionalInfo": "Putra Pertama dari Pasangan\nBapak Si pria &\nIbu Si pria\nBeralamat di Alamat rumah si pria",
+            "socialMedia": {
+                "facebook": "argafb",
+                "instagram": "argaig",
+                "tiktok": "argatiktok"
+            },
+            "linkPhoto": "https://placehold.co/300x400?text=Arga"
+        },
+        {
+            "order": 2,
+            "name": "Nisa Sunisa",
+            "nickName": "Nisa",
+            "gender": "female",
+            "additionalInfo": "Putri Pertama dari Pasangan\nBapak Si pria &\nIbu Si pria\nBeralamat di Alamat rumah si pria",
+            "socialMedia": {
+                "facebook": "nisafb",
+                "instagram": "nisaig",
+                "tiktok": "nisatiktok"
+            },
+            "linkPhoto": "https://placehold.co/300x400?text=Nisa"
+        }
+    ],
+    "mainEventDate" : "2025-06-01",
+    "mainEventLocation" : "urlGoogleMap",
+    "eventSchedules" : [
+        {
+            "order" : 1,
+            "day" : "Rabu",
+            "date" : "2025-06-03",
+            "title" : "Akad",
+            "description" : "deskripsi akad",
+            "addressLocation" : "Rumah Justin di Jakarta",
+            "locationLink" : "urlGoogleMapEventSchedule1",
+            "timezone" : "WIB",
+            "startHour" : "01:30",
+            "endHour" : "08:00",
+            "customHour" : null,
+            "icon" : ""
+        },
+        {
+            "order" : 2,
+            "day" : "Rabu",
+            "date" : "2025-06-03",
+            "title" : "Resepsi",
+            "description" : "deskripsi resepsi",
+            "addressLocation" : "Rumah Nisa di Jakarta",
+            "locationLink" : "urlGoogleMapEventSchedule1",
+            "timezone" : "WIB",
+            "startHour" : "08:00",
+            "endHour" : "12:00",
+            "customHour" : null,
+            "icon" : ""
+        }
+    ],
+    "photoGalleries" : [
+        {
+            "order" : 1,
+            "filename" : "fileName1",
+            "link" : "photoLink1"
+        },
+        {
+            "order" : 2,
+            "filename" : "fileName2",
+            "link" : "photoLink2"
+        }
+    ],
+    "videoGalleries" : [
+        {
+            "order" : 1,
+            "platform" : "youtube",
+            "link" : "videoLink1"
+        },
+        {
+            "order" : 2,
+            "platform" : "tiktok",
+            "link" : "videoLink2"
+        }
+    ],
+    "utterances" : {
+        "opening" : "Pembuka1 Atas Berkah dan Rahmat Allah Subhanallahu Wa Ta'ala. Tanpa mengurangi rasa hormat. Kami mengundang Bapak/Ibu/Saudara/i serta kerabat sekalian untuk menghadiri acara pernikahan kami :",
+        "closing" : "Closing1 Merupakan suatu kehormatan dan kebahagiaan bagi kami sekeluarga, apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu. Atas kehadiran dan doa restunya, kami mengucapkan terima kasih.",
+        "announcement" : "",
+        "prayer" : "prayer1 وَمِنْ اٰيٰتِهٖٓ اَنْ خَلَقَ لَكُمْ مِّنْ اَنْفُسِكُمْ اَزْوَاجًا لِّتَسْكُنُوْٓا اِلَيْهَا وَجَعَلَ بَيْنَكُمْ مَّوَدَّةً وَّرَحْمَةًۗ اِنَّ فِيْ ذٰلِكَ لَاٰيٰتٍ لِّقَوْمٍ يَّتَفَكَّرُوْنَ\nDi antara tanda-tanda (kebesaran)-Nya ialah bahwa Dia menciptakan pasangan-pasangan untukmu dari (jenis) dirimu sendiri agar kamu merasa tenteram kepadanya. Dia menjadikan di antaramu rasa cinta dan kasih sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda (kebesaran Allah) bagi kaum yang berpikir.\n- Ar-Rum · Ayat 21 -",
+        "gift" : "gift1 Doa restu Bapak/Ibu sekalian merupakan karunia yang sangat berarti bagi kami. Dan jika memberi merupakan ungkapan tanda kasih, Bapak/Ibu dapat memberi kado secara cashless. Terima kasih"
+    },
+    "digitalGifts" : [
+        {
+            "order" : 1,
+            "accountType" : "BRI",
+            "accountCode" : "BRI",
+            "accountNumber" : "0343892323",
+            "accountHolder" : "Arga",
+            "note" : ""
+        },
+        {
+            "order" : 2,
+            "accountType" : "BNI Syariah",
+            "accountCode" : "BNI_SYARIAH",
+            "accountNumber" : "0349383489",
+            "accountHolder" : "Nisa",
+            "note" : ""
+        }
+    ],
+    "whatsappShareContent" : {
+        "title" :"The Wedding of Arga & Nisa",
+        "description" : "",
+        "image" : "imageWhatsappShare"
+    },
+    "loveStories" : [
+        {
+            "order" : 1,
+            "title" : "Pertemuan Di Kereta Api",
+            "description" : "Pertemuan tak terduga di sebuah kereta api membawa Aria dan Ryan dalam sebuah cerita cinta perjalanan yang tak terlupakan. Aria adalah seorang gadis yang bekerja sebagai penulis buku anak-anak, sedangkan Ryan adalah seorang pengusaha muda yang sedang dalam perjalanan bisnis ke kota lain.",
+            "imageLink" : "storyImageLink1" 
+        },
+        {
+            "order" : 2,
+            "title" : "Lanjut Ke Pelaminan",
+            "description" : "Setelah itu, Ryan dan Aria terus berhubungan dan memulai sebuah hubungan yang manis. Mereka mengunjungi tempat-tempat yang indah dan menikmati setiap momen bersama. Perjalanan pertemuan di kereta api telah membawa mereka pada sebuah cerita cinta perjalanan yang tak terlupakan.",
+            "imageLink" : "storyImageLink2" 
+        }
+    ]
+
+}
