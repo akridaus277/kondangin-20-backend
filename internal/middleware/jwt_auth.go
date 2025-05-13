@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"kondangin-backend/internal/service"
 	"kondangin-backend/internal/utils"
+	"log"
 
 	"net/http"
 	"strings"
@@ -9,32 +11,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func JWTAuthMiddleware() gin.HandlerFunc {
+func JWTAuthMiddleware(userService service.UserService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is required"})
-			c.Abort()
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
 			return
 		}
 
-		parts := strings.Split(authHeader, " ")
-		if len(parts) != 2 || parts[0] != "Bearer" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authorization header format"})
-			c.Abort()
-			return
-		}
+		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 
-		tokenString := parts[1]
-
-		userID, err := utils.ValidateJWTToken(tokenString)
+		claims, err := utils.ValidateJWTToken(tokenString)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
-			c.Abort()
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 			return
 		}
 
-		c.Set("userID", userID)
+		username := claims.Subject
+		log.Printf("username middleware : %s", username)
+
+		// 🔍 Panggil UserService untuk ambil user dari DB
+		user, err := userService.GetUserByUsername(username)
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "User not found"})
+			return
+		}
+
+		// Set user ke context biar bisa dipakai di handler
+		c.Set("user", user)
+
 		c.Next()
 	}
 }

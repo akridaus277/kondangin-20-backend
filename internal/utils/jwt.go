@@ -3,6 +3,7 @@ package utils
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -30,9 +31,11 @@ func GenerateJWT(user models.User) (string, error) {
 	// Ubah ke durasi dalam detik, lalu ubah jadi time.Duration
 	tokenDuration := time.Duration(tokenDurationHours * float64(time.Hour))
 
+	log.Printf("Generate token untuk user: ID=%d, Username=%s", user.ID, user.Username)
+
 	// Buat klaim (claims) baru
 	claims := &jwt.StandardClaims{
-		Subject:   fmt.Sprintf("%d", user.ID),                       // ID user di-encode menjadi string
+		Subject:   user.Username,                                    // ID user di-encode menjadi string
 		ExpiresAt: time.Now().Add(tokenDuration * time.Hour).Unix(), // Token akan expired dalam 24 jam
 		IssuedAt:  time.Now().Unix(),
 	}
@@ -113,31 +116,22 @@ func ValidateResetPasswordToken(tokenString string) (*jwt.StandardClaims, error)
 	return claims, nil
 }
 
-// ValidateJWTToken memvalidasi JWT dan mengembalikan user ID (uint)
-func ValidateJWTToken(tokenString string) (uint, error) {
+// ValidateJWTToken memvalidasi JWT dan mengembalikan user username
+func ValidateJWTToken(tokenString string) (*jwt.StandardClaims, error) {
 	jwtKey := []byte(os.Getenv("JWT_SECRET_KEY"))
 
 	token, err := jwt.ParseWithClaims(tokenString, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-		// Validasi signing method
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, errors.New("unexpected signing method")
-		}
 		return jwtKey, nil
 	})
 
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 
-	// Ambil claims jika valid
 	if claims, ok := token.Claims.(*jwt.StandardClaims); ok && token.Valid {
-		// Ubah Subject ke uint (karena kita simpan userID di Subject)
-		userID, err := strconv.ParseUint(claims.Subject, 10, 64)
-		if err != nil {
-			return 0, errors.New("invalid subject format")
-		}
-		return uint(userID), nil
+		log.Printf("Token subject: %s", claims.Subject)
+		return claims, nil
+	} else {
+		return nil, errors.New("invalid token")
 	}
-
-	return 0, errors.New("invalid token")
 }

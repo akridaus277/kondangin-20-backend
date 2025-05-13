@@ -8,6 +8,7 @@ import (
 	"kondangin-backend/internal/repository"
 	routes "kondangin-backend/internal/route"
 	"kondangin-backend/internal/service"
+	validatorService "kondangin-backend/internal/service/validator"
 	"os"
 	"strings"
 
@@ -23,7 +24,12 @@ func main() {
 	config.LoadConfig()
 
 	config.ConnectDatabase()
-	config.DB.AutoMigrate(&models.User{}, &models.Invitation{}) // <- ini migrasi tabel User
+	config.DB.AutoMigrate(
+		&models.User{},
+		&models.Invitation{},
+		&models.InvitationPermission{},
+		&models.EventType{},
+		&models.InvitationTemplate{}) // <- ini migrasi db
 	db := config.GetDB()
 	// Init router
 	router := gin.Default()
@@ -74,23 +80,37 @@ func main() {
 
 	router.Use(cors.New(corsConfig))
 
+	// Repository
 	userRepo := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepo)
-	userHandler := handler.NewUserHandler(userService)
 	invitationRepo := repository.NewInvitationRepository(db)
 	invitationPermissionRepo := repository.NewInvitationPermissionRepository(db)
+	eventTypeRepo := repository.NewEventTypeRepository(db)
+	// Model Service
+	userService := service.NewUserService(userRepo)
+	invitationService := service.NewInvitationService(invitationRepo)
+	invitationPermissionService := service.NewInvitationPermissionService(invitationPermissionRepo)
+	eventTypeService := service.NewEventTypeService(eventTypeRepo)
+	// Validator Service
+	memberDashboardValidatorService := validatorService.NewMemberDashboardValidator(invitationRepo, invitationPermissionRepo, eventTypeRepo)
+	// Feature Service
 	invitationDashboardService := service.NewInvitationDashboardService(invitationRepo, invitationPermissionRepo)
-	invitationDashboardHandler := handler.NewInvitationDashboardHandler(invitationDashboardService)
+	memberDashboardService := service.NewMemberDashboardService(invitationService, invitationPermissionService, eventTypeService, memberDashboardValidatorService)
 	invitationGuestService := service.NewInvitationGuestService(invitationRepo)
+	authService := service.NewAuthService(userRepo)
+	// Handler
+	authHandler := handler.NewAuthHandler(authService)
+	invitationDashboardHandler := handler.NewInvitationDashboardHandler(invitationDashboardService)
 	invitationGuestHandler := handler.NewInvitationGuestHandler(invitationGuestService)
+	memberDashboardHandler := handler.NewMemberDashboardHandler(memberDashboardService)
 
 	// Register routes
 	router.OPTIONS("/*path", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
-	routes.UserRoutes(router, userHandler)
-	routes.InvitationDashboardRoutes(router, invitationDashboardHandler)
+	routes.AuthRoutes(router, authHandler)
+	routes.InvitationDashboardRoutes(router, userService, invitationDashboardHandler)
 	routes.InvitationGuestRoutes(router, invitationGuestHandler)
+	routes.MemberDashboardRoutes(router, userService, memberDashboardHandler)
 
 	// Start server
 	router.Run(":8080")

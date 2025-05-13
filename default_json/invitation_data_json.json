@@ -1,6 +1,7 @@
 {
     "title" : "The Wedding of Arga & Nisa",
     "coverPhoto" : "urlCoverPhoto",
+    "eventType" : "WEDDING",
     "music" : {
         "title" : "Beautiful in White",
         "name" : "",

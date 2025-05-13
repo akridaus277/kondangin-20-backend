@@ -18,34 +18,6 @@ func NewInvitationDashboardHandler(service service.InvitationDashboardService) *
 	return &InvitationDashboardHandler{service}
 }
 
-func (h *InvitationDashboardHandler) CreateInvitation(c *gin.Context) {
-	var req dto.CreateInvitationRequest
-
-	if err := c.ShouldBindJSON(&req); err != nil {
-		utils.SendBadRequestError(c, "Invalid input", gin.H{"error": err.Error()})
-		return
-	}
-
-	userIDInterface, exists := c.Get("userID")
-	if !exists {
-		utils.SendUnauthorizedError(c, "Unauthorized", nil)
-		return
-	}
-
-	userID, ok := userIDInterface.(uint)
-	if !ok {
-		utils.SendUnauthorizedError(c, "Invalid user ID type", nil)
-		return
-	}
-
-	if err := h.service.CreateInvitation(userID, req); err != nil {
-		utils.SendInternalServerError(c, "Failed to create invitation", gin.H{"error": err.Error()})
-		return
-	}
-
-	utils.SendSuccess(c, "Invitation created", nil)
-}
-
 func (h *InvitationDashboardHandler) GetInvitationData(c *gin.Context) {
 	var req dto.GetDataJSONRequest
 

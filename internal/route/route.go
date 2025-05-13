@@ -3,37 +3,37 @@ package routes
 import (
 	"kondangin-backend/internal/handler"
 	"kondangin-backend/internal/middleware"
+	"kondangin-backend/internal/service"
 
 	"github.com/gin-gonic/gin"
 )
 
-func UserRoutes(r *gin.Engine, userHandler *handler.UserHandler) {
+func AuthRoutes(r *gin.Engine, authHandler *handler.AuthHandler) {
 	r.GET("/hello-world", handler.HelloWorld)
 
-	r.POST("/register", userHandler.RegisterUser)
+	r.POST("/register", authHandler.RegisterUser)
 
-	r.POST("/login", userHandler.LoginUser)
+	r.POST("/login", authHandler.LoginUser)
 
-	r.POST("/encrypt-password", userHandler.EncryptPassword)
+	r.POST("/encrypt-password", authHandler.EncryptPassword)
 
-	r.GET("/verify", userHandler.VerifyEmail)
+	r.GET("/verify", authHandler.VerifyEmail)
 
-	r.POST("/resend-verification", userHandler.ResendVerificationEmail)
+	r.POST("/resend-verification", authHandler.ResendVerificationEmail)
 
-	r.POST("/forgot-password", userHandler.ForgotPassword)
+	r.POST("/forgot-password", authHandler.ForgotPassword)
 
-	r.POST("/reset-password", userHandler.ResetPassword)
+	r.POST("/reset-password", authHandler.ResetPassword)
 
 }
 
-func InvitationDashboardRoutes(r *gin.Engine, invitationDashboardHandler *handler.InvitationDashboardHandler) {
+func InvitationDashboardRoutes(r *gin.Engine, userService service.UserService, invitationDashboardHandler *handler.InvitationDashboardHandler) {
 	inv := r.Group("/invitation-dashboard")
 
 	// Kalau ingin route dengan JWT auth:
 	auth := inv.Group("/")
-	auth.Use(middleware.JWTAuthMiddleware())
+	auth.Use(middleware.JWTAuthMiddleware(userService))
 	{
-		auth.POST("/create", invitationDashboardHandler.CreateInvitation)
 		auth.POST("/get-data-json", invitationDashboardHandler.GetInvitationData)
 		auth.POST("/add-permission", invitationDashboardHandler.AddInvitationPermission)
 	}
@@ -45,4 +45,17 @@ func InvitationGuestRoutes(r *gin.Engine, invitationGuestHandler *handler.Invita
 	// Route tanpa auth
 	inv.POST("/get-invitation", invitationGuestHandler.GetInvitationData)
 
+}
+
+func MemberDashboardRoutes(r *gin.Engine, userService service.UserService, memberDashboardHandler *handler.MemberDashboardHandler) {
+	inv := r.Group("/member-dashboard")
+
+	// Kalau ingin route dengan JWT auth:
+	auth := inv.Group("/")
+	auth.Use(middleware.JWTAuthMiddleware(userService))
+	{
+		auth.POST("/create-invitation", memberDashboardHandler.CreateInvitation)
+		auth.GET("/get-invitation", memberDashboardHandler.GetInvitation)
+		auth.GET("/lov-event-type", memberDashboardHandler.GetLovEventType)
+	}
 }

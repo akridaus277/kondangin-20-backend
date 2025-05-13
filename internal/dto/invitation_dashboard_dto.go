@@ -1,9 +1,5 @@
 package dto
 
-type CreateInvitationRequest struct {
-	Subdomain string `json:"subdomain" binding:"required"`
-}
-
 type GetDataJSONRequest struct {
 	Subdomain string `json:"subdomain" binding:"required"`
 }

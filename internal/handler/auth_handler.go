@@ -10,15 +10,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UserHandler struct {
-	service service.UserService
+type AuthHandler struct {
+	service service.AuthService
 }
 
-func NewUserHandler(service service.UserService) *UserHandler {
-	return &UserHandler{service}
+func NewAuthHandler(service service.AuthService) *AuthHandler {
+	return &AuthHandler{service}
 }
 
-func (h *UserHandler) EncryptPassword(c *gin.Context) {
+func (h *AuthHandler) EncryptPassword(c *gin.Context) {
 	var req struct {
 		Password string `json:"password"`
 	}
@@ -48,7 +48,7 @@ func (h *UserHandler) EncryptPassword(c *gin.Context) {
 	utils.SendSuccess(c, "Password encrypted successfully", encodedPassword)
 }
 
-func (h *UserHandler) RegisterUser(c *gin.Context) {
+func (h *AuthHandler) RegisterUser(c *gin.Context) {
 	var req dto.RegisterUserRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -65,7 +65,7 @@ func (h *UserHandler) RegisterUser(c *gin.Context) {
 	utils.SendSuccess(c, "User registered successfully", res)
 }
 
-func (h *UserHandler) LoginUser(c *gin.Context) {
+func (h *AuthHandler) LoginUser(c *gin.Context) {
 	var req dto.LoginUserRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -82,7 +82,7 @@ func (h *UserHandler) LoginUser(c *gin.Context) {
 	utils.SendSuccess(c, "Login successful", res)
 }
 
-func (h *UserHandler) VerifyEmail(c *gin.Context) {
+func (h *AuthHandler) VerifyEmail(c *gin.Context) {
 	token := c.Query("token")
 	if token == "" {
 		utils.SendBadRequestError(c, "Token required", nil)
@@ -97,7 +97,7 @@ func (h *UserHandler) VerifyEmail(c *gin.Context) {
 	utils.SendSuccess(c, "Email successfully verified", nil)
 }
 
-func (h *UserHandler) ResendVerificationEmail(c *gin.Context) {
+func (h *AuthHandler) ResendVerificationEmail(c *gin.Context) {
 	var req struct {
 		Email string `json:"email" binding:"required,email"`
 	}
@@ -115,7 +115,7 @@ func (h *UserHandler) ResendVerificationEmail(c *gin.Context) {
 	utils.SendSuccess(c, "Verification email sent", nil)
 }
 
-func (h *UserHandler) ForgotPassword(c *gin.Context) {
+func (h *AuthHandler) ForgotPassword(c *gin.Context) {
 	var req struct {
 		Email string `json:"email" binding:"required,email"`
 	}
@@ -133,7 +133,7 @@ func (h *UserHandler) ForgotPassword(c *gin.Context) {
 	utils.SendSuccess(c, "Reset password email sent", nil)
 }
 
-func (h *UserHandler) ResetPassword(c *gin.Context) {
+func (h *AuthHandler) ResetPassword(c *gin.Context) {
 	var req struct {
 		Token       string `json:"token" binding:"required"`
 		NewPassword string `json:"newPassword" binding:"required,min=6"`
