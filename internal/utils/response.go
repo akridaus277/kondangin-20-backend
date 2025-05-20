@@ -41,3 +41,7 @@ func SendBadRequestError(c *gin.Context, message string, data interface{}) {
 func SendUnauthorizedError(c *gin.Context, message string, data interface{}) {
 	SendResponse(c, http.StatusText(http.StatusUnauthorized), http.StatusUnauthorized, message, data)
 }
+
+func SendForbiddenError(c *gin.Context, message string, data interface{}) {
+	SendResponse(c, http.StatusText(http.StatusForbidden), http.StatusForbidden, message, data)
+}

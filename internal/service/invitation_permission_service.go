@@ -12,6 +12,7 @@ type InvitationPermissionService interface {
 	GetByID(id uint) (*models.InvitationPermission, error)
 	GetAll() ([]models.InvitationPermission, error)
 	GetByInvitationAndUser(invitationID, userID uint) (*models.InvitationPermission, error)
+	HasPermission(invitationID, userID uint, permission string) (bool, error)
 }
 
 type invitationPermissionService struct {
@@ -44,4 +45,19 @@ func (s *invitationPermissionService) GetAll() ([]models.InvitationPermission, e
 
 func (s *invitationPermissionService) GetByInvitationAndUser(invitationID, userID uint) (*models.InvitationPermission, error) {
 	return s.repo.FindByInvitationAndUser(invitationID, userID)
+}
+
+func (s *invitationPermissionService) HasPermission(invitationID, userID uint, permission string) (bool, error) {
+	ip, err := s.repo.FindByInvitationAndUser(invitationID, userID)
+	if err != nil {
+		return false, err
+	}
+
+	for _, p := range ip.Permissions {
+		if p == permission {
+			return true, nil
+		}
+	}
+
+	return false, nil
 }

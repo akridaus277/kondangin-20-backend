@@ -39,7 +39,7 @@ func NewMemberDashboardService(
 
 func (s *memberDashboardService) CreateInvitation(c *gin.Context, user *model.User, req dto.CreateInvitationRequest) error {
 	// Baca file default data JSON
-	defaultDataJSONPath := filepath.Join("default_json", "invitation_data_json.json")
+	defaultDataJSONPath := filepath.Join("default_json", "invitation_data_json_wedding.json")
 	defaultDataJSONFile, err := os.Open(defaultDataJSONPath)
 	if err != nil {
 		utils.SendInternalServerError(c, "Failed to get default data json", nil)
@@ -54,7 +54,7 @@ func (s *memberDashboardService) CreateInvitation(c *gin.Context, user *model.Us
 	}
 
 	// Baca file default data JSON
-	defaultPropertyJSONPath := filepath.Join("default_json", "invitation_property_json.json")
+	defaultPropertyJSONPath := filepath.Join("default_json", "invitation_property_json_wedding.json")
 	defaultPropertyJSONFile, err := os.Open(defaultPropertyJSONPath)
 	if err != nil {
 		utils.SendInternalServerError(c, "Failed to get property json", nil)
@@ -82,10 +82,16 @@ func (s *memberDashboardService) CreateInvitation(c *gin.Context, user *model.Us
 		utils.SendInternalServerError(c, "Failed to parse invitation data", nil)
 		return errors.New("")
 	}
+	var property map[string]interface{}
+	if err := json.Unmarshal([]byte(defaultPropertyJSON), &property); err != nil {
+		utils.SendInternalServerError(c, "Failed to parse invitation property", nil)
+		return errors.New("")
+	}
 
-	data["title"] = req.Title
-	data["mainEventDate"] = req.Date
-	data["eventType"] = req.EventType
+	// Ubah title
+	data["mainEvent"].(map[string]interface{})["title"] = req.Title
+	data["mainEvent"].(map[string]interface{})["mainEventDate"] = req.Date
+	property["eventType"] = req.EventType
 
 	// Marshal kembali ke string JSON
 	updatedDataJSONBytes, err := json.Marshal(data)
@@ -93,13 +99,21 @@ func (s *memberDashboardService) CreateInvitation(c *gin.Context, user *model.Us
 		utils.SendInternalServerError(c, "Failed to convert updated data to JSON", nil)
 		return errors.New("")
 	}
+	// Marshal kembali ke string JSON
+	updatedPropertyJSONBytes, err := json.Marshal(property)
+	if err != nil {
+		utils.SendInternalServerError(c, "Failed to convert updated property to JSON", nil)
+		return errors.New("")
+	}
+
 	// Konversi ke string
 	updatedDataJSONString := string(updatedDataJSONBytes)
+	updatedPropertyJSONString := string(updatedPropertyJSONBytes)
 
 	inv := &model.Invitation{
 		Subdomain:    req.Subdomain,
 		DataJSON:     updatedDataJSONString,
-		PropertyJSON: defaultPropertyJSON,
+		PropertyJSON: updatedPropertyJSONString,
 		UserID:       user.ID,
 		CreatedBy:    user.Username,
 	}

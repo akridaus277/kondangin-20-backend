@@ -2,6 +2,7 @@ package routes
 
 import (
 	"kondangin-backend/internal/handler"
+	invitationWeddingHandler "kondangin-backend/internal/handler/invitation/wedding"
 	"kondangin-backend/internal/middleware"
 	"kondangin-backend/internal/service"
 
@@ -27,7 +28,11 @@ func AuthRoutes(r *gin.Engine, authHandler *handler.AuthHandler) {
 
 }
 
-func InvitationDashboardRoutes(r *gin.Engine, userService service.UserService, invitationDashboardHandler *handler.InvitationDashboardHandler) {
+func InvitationDashboardRoutes(
+	r *gin.Engine,
+	userService service.UserService,
+	invitationDashboardHandler *handler.InvitationDashboardHandler,
+	invitationWeddingHandler *invitationWeddingHandler.InvitationWeddingHandler) {
 	inv := r.Group("/invitation-dashboard")
 
 	// Kalau ingin route dengan JWT auth:
@@ -36,6 +41,11 @@ func InvitationDashboardRoutes(r *gin.Engine, userService service.UserService, i
 	{
 		auth.POST("/get-data-json", invitationDashboardHandler.GetInvitationData)
 		auth.POST("/add-permission", invitationDashboardHandler.AddInvitationPermission)
+
+		// WEDDING
+		wedding := auth.Group("/wedding")
+		wedding.PUT("/main-event", invitationWeddingHandler.UpdateMainEvent)
+		wedding.POST("/main-event/get", invitationWeddingHandler.GetMainEvent)
 	}
 }
 

@@ -1,0 +1,151 @@
+{
+    "price" : 0,
+    "package_type" : {
+        "type" : "unit",
+        "duration" : null,
+        "duration_period" : null
+    },
+    "features" : {
+        "templates" : ["all"],
+        "guest" : {
+            "change_guest_name" : false,
+            "number_of_guest" : -1,
+            "publish_eligible" : false
+        },
+        "music" : {
+            "enabled" : false,
+            "customization" : false
+        },
+        "photo_gallery" : {
+            "enabled" : false,
+            "number_of_photos" : 10 
+        },
+        "video_gallery" : {
+            "enabled" : false,
+            "number_of_videos" : 2
+        },
+        "love_story" : {
+            "enabled" : false
+        },
+        "main_event" : {
+            "embed_google_maps" : false
+        },
+        "event_schedule" : {
+            "embed_google_maps" : false
+        },
+        "gift" : {
+            "digital_gift" : false,
+            "physical_gift" : false
+        }
+    },
+    "contents" : [
+        {
+            "name" : "Akses Seluruh Tema",
+            "enabled" : true
+        },
+        {
+            "name" : "Ubah Nama Tamu",
+            "enabled" : true
+        },
+        {
+            "name" : "Tanpa Masa Aktif",
+            "enabled" : true
+        },
+        {
+            "name" : "RSVP & Ucapan",
+            "enabled" : true
+        },
+        {
+            "name" : "Lokasi Maps",
+            "enabled" : true
+        },
+        {
+            "name" : "Unlimited Penerima",
+            "enabled" : true
+        },
+        {
+            "name" : "Countdown & Save To Calendar",
+            "enabled" : true
+        },
+        {
+            "name" : "Foto Gallery",
+            "enabled" : false
+        },
+        {
+            "name" : "0 Gallery",
+            "enabled" : true
+        },
+        {
+            "name" : "Rekening Titip Hadiah",
+            "enabled" : false
+        },
+        {
+            "name" : "Musik",
+            "enabled" : false
+        },
+        {
+            "name" : "Titip Kado Fisik",
+            "enabled" : true
+        },
+        {
+            "name" : "Virtual Gift",
+            "enabled" : true
+        },
+        {
+            "name" : "Custom Musik",
+            "enabled" : false
+        },
+        {
+            "name" : "Panel Admin - Buat/Edit Sendiri",
+            "enabled" : false
+        },
+        {
+            "name" : "Link Streaming & Video",
+            "enabled" : false
+        },
+        {
+            "name" : "Bisa Disebar",
+            "enabled" : true
+        },
+        {
+            "name" : "Auto Scroll",
+            "enabled" : false
+        },
+        {
+            "name" : "2x Revisi",
+            "enabled" : true
+        },
+        {
+            "name" : "QR Code Check-in Tami",
+            "enabled" : false
+        },
+        {
+            "name" : "Love Story",
+            "enabled" : false
+        },
+        {
+            "name" : "Embed Google Maps",
+            "enabled" : false
+        },
+        {
+            "name" : "Video / Streaming",
+            "enabled" : false
+        },
+        {
+            "name" : "Balas Ucapan",
+            "enabled" : false
+        },
+        {
+            "name" : "Ubah Style Font",
+            "enabled" : false
+        },
+        {
+            "name" : "Custom Warna Tema",
+            "enabled" : false
+        },
+        {
+            "name" : "Dibuatin Admin",
+            "enabled" : true
+        }
+    ]
+}

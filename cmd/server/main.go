@@ -4,10 +4,13 @@ import (
 	"fmt"
 	"kondangin-backend/config"
 	"kondangin-backend/internal/handler"
+	invitationWeddingHandler "kondangin-backend/internal/handler/invitation/wedding"
 	models "kondangin-backend/internal/model"
 	"kondangin-backend/internal/repository"
 	routes "kondangin-backend/internal/route"
 	"kondangin-backend/internal/service"
+	invitationWeddingService "kondangin-backend/internal/service/invitation/wedding"
+	invitationWeddingValidatorService "kondangin-backend/internal/service/invitation/wedding/validator"
 	validatorService "kondangin-backend/internal/service/validator"
 	"os"
 	"strings"
@@ -29,7 +32,8 @@ func main() {
 		&models.Invitation{},
 		&models.InvitationPermission{},
 		&models.EventType{},
-		&models.InvitationTemplate{}) // <- ini migrasi db
+		&models.InvitationTemplate{},
+		&models.Package{}) // <- ini migrasi db
 	db := config.GetDB()
 	// Init router
 	router := gin.Default()
@@ -85,6 +89,7 @@ func main() {
 	invitationRepo := repository.NewInvitationRepository(db)
 	invitationPermissionRepo := repository.NewInvitationPermissionRepository(db)
 	eventTypeRepo := repository.NewEventTypeRepository(db)
+	// packageRepo := repository.NewPackageRepository(db)
 	// Model Service
 	userService := service.NewUserService(userRepo)
 	invitationService := service.NewInvitationService(invitationRepo)
@@ -92,23 +97,29 @@ func main() {
 	eventTypeService := service.NewEventTypeService(eventTypeRepo)
 	// Validator Service
 	memberDashboardValidatorService := validatorService.NewMemberDashboardValidator(invitationRepo, invitationPermissionRepo, eventTypeRepo)
+	invitationWeddingValidatorService := invitationWeddingValidatorService.NewWeddingValidator(invitationRepo, invitationPermissionService, eventTypeRepo)
+
 	// Feature Service
 	invitationDashboardService := service.NewInvitationDashboardService(invitationRepo, invitationPermissionRepo)
 	memberDashboardService := service.NewMemberDashboardService(invitationService, invitationPermissionService, eventTypeService, memberDashboardValidatorService)
 	invitationGuestService := service.NewInvitationGuestService(invitationRepo)
+	invitationWeddingService := invitationWeddingService.NewWeddingService(invitationWeddingValidatorService, invitationService)
 	authService := service.NewAuthService(userRepo)
 	// Handler
 	authHandler := handler.NewAuthHandler(authService)
 	invitationDashboardHandler := handler.NewInvitationDashboardHandler(invitationDashboardService)
 	invitationGuestHandler := handler.NewInvitationGuestHandler(invitationGuestService)
 	memberDashboardHandler := handler.NewMemberDashboardHandler(memberDashboardService)
+	invitationWeddingHandler := invitationWeddingHandler.NewInvitationWeddingHandler(invitationWeddingService)
 
+	// Expose folder uploads ke public
+	router.Static("/uploads", "./uploads")
 	// Register routes
 	router.OPTIONS("/*path", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
 	routes.AuthRoutes(router, authHandler)
-	routes.InvitationDashboardRoutes(router, userService, invitationDashboardHandler)
+	routes.InvitationDashboardRoutes(router, userService, invitationDashboardHandler, invitationWeddingHandler)
 	routes.InvitationGuestRoutes(router, invitationGuestHandler)
 	routes.MemberDashboardRoutes(router, userService, memberDashboardHandler)
 

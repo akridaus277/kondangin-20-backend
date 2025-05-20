@@ -1,7 +1,11 @@
 {
-    "title" : "The Wedding of Arga & Nisa",
-    "coverPhoto" : "urlCoverPhoto",
-    "eventType" : "WEDDING",
+    "mainEvent" : {
+        "title" : "The Wedding of Arga & Nisa",
+        "coverPhoto" : "urlCoverPhoto",
+        "mainEventDate" : "2025-06-01",
+        "mainEventLocation" : "urlGoogleMap",
+        "mainEventLocationMap" : "urlGoogleMap"
+    },
     "music" : {
         "title" : "Beautiful in White",
         "name" : "",
@@ -35,8 +39,7 @@
             "linkPhoto": "https://placehold.co/300x400?text=Nisa"
         }
     ],
-    "mainEventDate" : "2025-06-01",
-    "mainEventLocation" : "urlGoogleMap",
+    
     "eventSchedules" : [
         {
             "order" : 1,
@@ -65,6 +68,18 @@
             "endHour" : "12:00",
             "customHour" : null,
             "icon" : ""
+        }
+    ],
+    "photoTemplates" : [
+        {
+            "order" : 1,
+            "filename" : "fileName1",
+            "link" : "photoLink1"
+        },
+        {
+            "order" : 2,
+            "filename" : "fileName2",
+            "link" : "photoLink2"
         }
     ],
     "photoGalleries" : [
@@ -116,10 +131,10 @@
             "note" : ""
         }
     ],
-    "whatsappShareContent" : {
-        "title" :"The Wedding of Arga & Nisa",
-        "description" : "",
-        "image" : "imageWhatsappShare"
+    "guests" : {
+        "name" : "Tamu1",
+        "whatsappNumber" : "0876437923749",
+        "category" : "Teman SMA"
     },
     "loveStories" : [
         {
