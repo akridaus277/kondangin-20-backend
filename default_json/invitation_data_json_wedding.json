@@ -13,37 +13,29 @@
     },
     "couples": [
         {
-            "order": 1,
             "name": "Arga Suraga",
             "nickName": "Arga",
             "gender": "male",
             "additionalInfo": "Putra Pertama dari Pasangan\nBapak Si pria &\nIbu Si pria\nBeralamat di Alamat rumah si pria",
-            "socialMedia": {
-                "facebook": "argafb",
-                "instagram": "argaig",
-                "tiktok": "argatiktok"
-            },
+            "facebook": "argafb",
+            "instagram": "argaig",
+            "tiktok": "argatiktok",
             "linkPhoto": "https://placehold.co/300x400?text=Arga"
         },
         {
-            "order": 2,
             "name": "Nisa Sunisa",
             "nickName": "Nisa",
             "gender": "female",
             "additionalInfo": "Putri Pertama dari Pasangan\nBapak Si pria &\nIbu Si pria\nBeralamat di Alamat rumah si pria",
-            "socialMedia": {
-                "facebook": "nisafb",
-                "instagram": "nisaig",
-                "tiktok": "nisatiktok"
-            },
+            "facebook": "nisafb",
+            "instagram": "nisaig",
+            "tiktok": "nisatiktok",
             "linkPhoto": "https://placehold.co/300x400?text=Nisa"
         }
     ],
     
     "eventSchedules" : [
         {
-            "order" : 1,
-            "day" : "Rabu",
             "date" : "2025-06-03",
             "title" : "Akad",
             "description" : "deskripsi akad",
@@ -56,8 +48,6 @@
             "icon" : ""
         },
         {
-            "order" : 2,
-            "day" : "Rabu",
             "date" : "2025-06-03",
             "title" : "Resepsi",
             "description" : "deskripsi resepsi",
@@ -72,38 +62,30 @@
     ],
     "photoTemplates" : [
         {
-            "order" : 1,
-            "filename" : "fileName1",
-            "link" : "photoLink1"
+            "linkPhoto" : "photoLink1"
         },
         {
-            "order" : 2,
-            "filename" : "fileName2",
-            "link" : "photoLink2"
+            "linkPhoto" : "photoLink2"
         }
     ],
     "photoGalleries" : [
         {
-            "order" : 1,
             "filename" : "fileName1",
-            "link" : "photoLink1"
+            "linkPhoto" : "photoLink1"
         },
         {
-            "order" : 2,
             "filename" : "fileName2",
-            "link" : "photoLink2"
+            "linkPhoto" : "photoLink2"
         }
     ],
     "videoGalleries" : [
         {
-            "order" : 1,
             "platform" : "youtube",
-            "link" : "videoLink1"
+            "linkVideo" : "videoLink1"
         },
         {
-            "order" : 2,
             "platform" : "tiktok",
-            "link" : "videoLink2"
+            "linkVideo" : "videoLink2"
         }
     ],
     "utterances" : {
